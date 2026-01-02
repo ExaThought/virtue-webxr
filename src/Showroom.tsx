@@ -14,7 +14,6 @@ export function Showroom({ setFuelLevel, isFuelLidOpen,showMessage }: Props) {
   const { scene } = useGLTF("/showroom.glb");
 
   const bikeRef = useRef<THREE.Object3D>(null);
-  const fuelRef = useRef<THREE.Object3D>(null);
 
   const FUEL_CAN_START: [number, number, number] = [0.9, 0.05, 1.9];
 

@@ -1,7 +1,3 @@
-type FuelGaugeProps = {
-  fuel: number;
-};
-
 export function FuelGauge({ fuel }: { fuel: number }) {
   return (
     <div
