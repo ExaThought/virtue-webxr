@@ -288,11 +288,12 @@ export function BikeInteractionController({
 
   // ------------------ POPUP ------------------
   return popupMsg ? (
-    <Html position={[0, 2.5, 0]}>
+    <Html position={[0, 0.3, 0]}>
       <div
         style={{
-          background: "rgba(0,0,0,0.9)",
-          color: "#00ff88",
+          color: "rgba(255, 255, 255, 0.9)",
+          background: "#049451ff",
+          width: "450px",
           padding: "16px 24px",
           borderRadius: "12px",
           fontWeight: "bold",
