@@ -8,14 +8,14 @@ export function IntroScene({
   return (
     <Html center>
       <div style={styles.container}>
-        <h1 style={styles.title}>Motorcycle Showroom</h1>
+        <h1 style={styles.title}>Motorcycle Workshop</h1>
 
         <p style={styles.subtitle}>
           Interactive 3D Training Experience
         </p>
 
         <button style={styles.button} onClick={onEnter}>
-          Enter Showroom
+          Enter Workshop
         </button>
 
         <p style={styles.hint}>
