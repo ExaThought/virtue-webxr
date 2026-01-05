@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import * as THREE from "three";
 
 export function Bike() {
-  const gltf = useGLTF("/bikeNew.glb"); // now load compressed glb
+  const gltf = useGLTF("/Bike.glb"); // now load compressed glb
 
 
   useEffect(() => {
@@ -53,4 +53,4 @@ export function Bike() {
   );
 }
 
-useGLTF.preload("/bikeNew.glb");
+useGLTF.preload("/Bike.glb");
