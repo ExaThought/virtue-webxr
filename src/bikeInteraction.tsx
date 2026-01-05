@@ -17,12 +17,13 @@ type Props = {
   onFuelLidChange: (open: boolean) => void;
   fuelLevel: number;
   showMessage: (msg: string) => void;
+  onMeshClick?: (meshName: string) => void;
 };
 
 export function BikeInteractionController({
   onFuelLidChange,
   fuelLevel,
-  showMessage,
+  showMessage,onMeshClick
 }: Props) {
   const { camera, scene, gl } = useThree();
 
@@ -292,7 +293,7 @@ export function BikeInteractionController({
       if (!hits.length) return;
 
       const mesh = hits[0].object;
-
+      onMeshClick?.(mesh.name);
       console.log(
         "🟡 Clicked mesh:",
         mesh.name,
@@ -334,3 +335,5 @@ export function BikeInteractionController({
     </Html>
   ) : null;
 }
+
+

@@ -7,10 +7,11 @@ type Props = {
   onFillFuel: () => void;
   isFuelLidOpen: boolean;
   showMessage: (msg: string) => void;
+  onFuelFilled?: () => void;
 };
 
 export const FuelCan = forwardRef<THREE.Object3D, Props>(
-  ({ position, onFillFuel, isFuelLidOpen ,showMessage }, ref) => {
+  ({ position, onFillFuel, isFuelLidOpen, showMessage, onFuelFilled }, ref) => {
     const { scene } = useGLTF("/fuel_can.glb");
 
     const [hovered, setHovered] = useState(false);
@@ -73,6 +74,7 @@ export const FuelCan = forwardRef<THREE.Object3D, Props>(
                 }
 
                 onFillFuel();
+                onFuelFilled?.();
               }}
               style={{
                 padding: "5px 10px",
