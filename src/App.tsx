@@ -19,9 +19,7 @@ export default function App() {
   // 🔹 AUTO STEP ADVANCE LISTENER (from mesh clicks)
   useEffect(() => {
     const nextStep = () => {
-      setCurrentStepIndex((i) =>
-        Math.min(i + 1, STEPS.length - 1)
-      );
+      setCurrentStepIndex((i) => Math.min(i + 1, STEPS.length - 1));
     };
 
     window.addEventListener("STEP_NEXT", nextStep);
@@ -55,9 +53,7 @@ export default function App() {
         >
           <button
             disabled={currentStepIndex === 0}
-            onClick={() =>
-              setCurrentStepIndex((i) => Math.max(i - 1, 0))
-            }
+            onClick={() => setCurrentStepIndex((i) => Math.max(i - 1, 0))}
           >
             ◀ Prev
           </button>
@@ -65,13 +61,21 @@ export default function App() {
           <div
             style={{
               padding: "12px 18px",
-              background: "rgba(0,0,0,0.75)",
-              color: "#fff",
-              borderRadius: 8,
+              color: "rgba(0,0,0,0.75)",
+              background: "#fff",
+              borderRadius: 10,
               minWidth: 340,
               textAlign: "center",
             }}
           >
+            <div
+              style={{
+                fontSize: 14,
+                marginBottom: 6,
+              }}
+            >
+              Step {currentStepIndex + 1} / {STEPS.length}
+            </div>
             <strong>{currentStep.name}</strong>
             <div
               style={{
@@ -87,9 +91,7 @@ export default function App() {
           <button
             disabled={currentStepIndex === STEPS.length - 1}
             onClick={() =>
-              setCurrentStepIndex((i) =>
-                Math.min(i + 1, STEPS.length - 1)
-              )
+              setCurrentStepIndex((i) => Math.min(i + 1, STEPS.length - 1))
             }
           >
             Next ▶

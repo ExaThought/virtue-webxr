@@ -19,7 +19,7 @@ type PourState =
   | "returning";
 
 export const FuelCan = forwardRef<THREE.Object3D, Props>(
-  ({ onFillFuel, isFuelLidOpen, showMessage, onFuelFilled }, ref) => {
+  ({ onFillFuel, isFuelLidOpen, showMessage, onFuelFilled }) => {
     const { scene } = useGLTF("/fuel_can.glb");
 
     const localRef = useRef<THREE.Object3D | null>(null);
