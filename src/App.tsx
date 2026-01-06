@@ -5,10 +5,14 @@ import { ShowroomScene } from "./ShowroomScene";
 import { FuelGauge } from "./FuelGauge";
 import { STEPS } from "./steps";
 
-// 🔹 NAV BUTTON STYLES
+// 🔹 NAV BUTTON STYLES (responsive)
 const navButtonStyle: React.CSSProperties = {
-  width: 42,
-  height: 42,
+  width: "4vw",
+  height: "4vw",
+  maxWidth: 42,
+  maxHeight: 42,
+  minWidth: 32,
+  minHeight: 32,
   borderRadius: "50%",
   border: "none",
   background: "#ffffff",
@@ -43,29 +47,48 @@ export default function App() {
     return () => window.removeEventListener("STEP_NEXT", nextStep);
   }, []);
 
+  // 🔹 SCREEN WIDTH FOR RESPONSIVE FONTS
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // font sizes responsive
+  const stepNumberFont = Math.min(16, windowWidth * 0.012);
+  const stepDescFont = Math.min(14, windowWidth * 0.01);
+  const stepNameFont = Math.min(18, windowWidth * 0.015);
+
+  // FuelGauge size responsive
+  const fuelGaugeSize = Math.min(120, windowWidth * 0.1);
+
   return (
     <div
       style={{
         width: "100vw",
         height: "100vh",
         position: "relative",
+        overflow: "hidden",
       }}
     >
       {/* 🔹 FUEL HUD */}
-      {entered && <FuelGauge fuel={fuelLevel} />}
+      {entered && <FuelGauge fuel={fuelLevel} size={fuelGaugeSize} />}
 
-      {/* 🔹 STEP UI (TOP CENTER) */}
       {entered && (
         <div
           style={{
             position: "absolute",
-            top: 20,
+            top: "2vh",
             left: "50%",
             transform: "translateX(-50%)",
             display: "flex",
             alignItems: "center",
-            gap: 12,
+            justifyContent: "center",
+            gap: windowWidth < 600 ? "0.5rem" : "1.5rem", // smaller gap on mobile
+            flexDirection: windowWidth < 600 ? "column" : "row", // stack on mobile
             zIndex: 50,
+            width: windowWidth < 600 ? "90%" : "auto",
           }}
         >
           {/* ◀ PREV BUTTON */}
@@ -75,9 +98,11 @@ export default function App() {
             style={{
               ...navButtonStyle,
               ...(currentStepIndex === 0 ? disabledStyle : {}),
+              width: windowWidth < 600 ? 36 : navButtonStyle.width,
+              height: windowWidth < 600 ? 36 : navButtonStyle.height,
             }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24">
+            <svg width="50%" height="50%" viewBox="0 0 24 24">
               <path
                 d="M15 18l-6-6 6-6"
                 fill="none"
@@ -92,26 +117,25 @@ export default function App() {
           {/* STEP CARD */}
           <div
             style={{
-              padding: "12px 18px",
+              padding: windowWidth < 600 ? "10px" : "12px 2vw",
               color: "rgba(0,0,0,0.75)",
               background: "#fff",
               borderRadius: 10,
-              minWidth: 340,
+              minWidth: windowWidth < 600 ? "100%" : 220,
+              maxWidth: 400,
               textAlign: "center",
+              flexGrow: 1,
             }}
           >
-            <div
-              style={{
-                fontSize: 14,
-                marginBottom: 6,
-              }}
-            >
+            <div style={{ fontSize: stepNumberFont, marginBottom: 6 }}>
               Step {currentStepIndex + 1} / {STEPS.length}
             </div>
-            <strong>{currentStep.name}</strong>
+            <strong style={{ fontSize: stepNameFont }}>
+              {currentStep.name}
+            </strong>
             <div
               style={{
-                fontSize: 12,
+                fontSize: stepDescFont,
                 marginTop: 6,
                 opacity: 0.85,
               }}
@@ -129,9 +153,11 @@ export default function App() {
             style={{
               ...navButtonStyle,
               ...(currentStepIndex === STEPS.length - 1 ? disabledStyle : {}),
+              width: windowWidth < 600 ? 36 : navButtonStyle.width,
+              height: windowWidth < 600 ? 36 : navButtonStyle.height,
             }}
           >
-            <svg width="18" height="18" viewBox="0 0 24 24">
+            <svg width="50%" height="50%" viewBox="0 0 24 24">
               <path
                 d="M9 6l6 6-6 6"
                 fill="none"

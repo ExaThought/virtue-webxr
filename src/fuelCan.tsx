@@ -4,7 +4,6 @@ import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 
 type Props = {
-  // position: [number, number, number];
   onFillFuel: () => void;
   isFuelLidOpen: boolean;
   showMessage: (msg: string) => void;
@@ -33,19 +32,16 @@ export const FuelCan = forwardRef<THREE.Object3D, Props>(
 
     /* ---------------- Capture original transform ---------------- */
     useEffect(() => {
-
       if (!localRef.current) return;
       originalPosition.current.copy(localRef.current.position);
       originalRotation.current.copy(localRef.current.rotation);
     }, []);
 
-
-
     /* ---------------------------------- */
     /* Target pour transform               */
     /* ---------------------------------- */
     const tankPosition = useMemo(
-      () => new THREE.Vector3(-0.85, 1.3, -2.45), // adjust later
+      () => new THREE.Vector3(-0.85, 1.3, -2.45),
       []
     );
 
@@ -53,7 +49,6 @@ export const FuelCan = forwardRef<THREE.Object3D, Props>(
       () => new THREE.Euler(Math.PI / 2.2, 0, 0),
       []
     );
-
 
     // clone materials for glow
     const materials = useMemo(() => {
@@ -119,16 +114,13 @@ export const FuelCan = forwardRef<THREE.Object3D, Props>(
           const finishedReturning =
             obj.position.distanceTo(originalPosition.current) < 0.02 &&
             Math.abs(obj.rotation.x - originalRotation.current.x) < 0.02;
-          if (
-            finishedReturning
-          ) {
+          if (finishedReturning) {
             setPourState("idle");
             onFuelFilled?.();
           }
           break;
       }
     });
-
 
     return (
       <primitive
@@ -151,8 +143,9 @@ export const FuelCan = forwardRef<THREE.Object3D, Props>(
         {hovered && pourState === "idle" && (
           <Html position={[0, 0.2, 0]} center distanceFactor={8}>
             <div
-              onClick={(e) => {
+              onPointerDown={(e) => {
                 e.stopPropagation();
+                e.preventDefault();
 
                 if (!isFuelLidOpen) {
                   showMessage("Open fuel lid first");
@@ -162,7 +155,6 @@ export const FuelCan = forwardRef<THREE.Object3D, Props>(
                 console.log("🚀 Starting pour animation");
                 setPourState("movingToTank");
                 onFillFuel();
-
               }}
               style={{
                 padding: "5px 10px",
@@ -173,6 +165,7 @@ export const FuelCan = forwardRef<THREE.Object3D, Props>(
                 cursor: "pointer",
                 userSelect: "none",
                 whiteSpace: "nowrap",
+                touchAction: "none",
               }}
             >
               Fill Fuel
